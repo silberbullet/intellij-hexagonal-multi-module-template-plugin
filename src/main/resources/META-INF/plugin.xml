@@ -25,6 +25,11 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.silberbullet.toolWindow.TemplateWindowFactory" id="TemplateWindow"/>
     </extensions>
+    <actions>
+        <action id="com.silberbullet.action.openTemplateDialog" class="com.silberbullet.action.OpenTemplateDialogAction"
+                text="Hex-Multi-module 템플릿 생성">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>
