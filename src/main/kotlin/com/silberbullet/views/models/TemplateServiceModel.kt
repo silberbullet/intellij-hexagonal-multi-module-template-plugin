@@ -7,5 +7,5 @@ data class TemplateServiceModel(
     var parentDirectory: String = "",
     var domainPrefix: String = "",
     var firstPackageName: String = "",
-    var methodList: MutableList<Int> = mutableListOf(),
+    var methodList: MutableSet<Int> = mutableSetOf(),
 )
