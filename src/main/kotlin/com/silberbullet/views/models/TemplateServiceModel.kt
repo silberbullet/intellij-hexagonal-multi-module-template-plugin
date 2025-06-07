@@ -2,7 +2,7 @@ package com.silberbullet.views.models
 
 import com.silberbullet.views.models.common.TemplateCommonModel
 
-data class TemplateServiceModel(
+internal class TemplateServiceModel(
     val common: TemplateCommonModel = TemplateCommonModel(),
     var parentDirectory: String = "",
     var domainPrefix: String = "",

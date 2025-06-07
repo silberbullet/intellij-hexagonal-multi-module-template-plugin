@@ -1,6 +1,6 @@
 package com.silberbullet.views.models.type
 
-enum class ServiceMethodType(val code: Int) {
+internal enum class ServiceMethodType(val code: Int) {
     List(0),
     Detail(1),
     Save(2),

@@ -7,7 +7,7 @@ import com.silberbullet.views.TemplateDialog
 class OpenTemplateDialogAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
-        val dialog = TemplateDialog()
+        val dialog = TemplateDialog(e.project!!)
 
         dialog.showAndGet()
     }
