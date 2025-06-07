@@ -4,13 +4,15 @@ import com.intellij.credentialStore.RememberCheckBoxState.isSelected
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.bindSelected
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
+import com.silberbullet.services.ServiceTemplateMaker
 import com.silberbullet.views.models.TemplateServiceModel
 import com.silberbullet.views.models.type.ServiceMethodType
 import javax.swing.JComponent
 
-class TemplateDialog(project: Project) : DialogWrapper(true) {
+class TemplateDialog(private val project: Project) : DialogWrapper(true) {
 
     private val serviceModel = TemplateServiceModel()
 
@@ -70,6 +72,34 @@ class TemplateDialog(project: Project) : DialogWrapper(true) {
                     }
                 }
             }
+
+            group("폴더 구조") {
+                // 최상위 Map 순회
+                serviceModel.domainStructure.forEach { (key, value) ->
+                    when (value) {
+                        is Boolean -> row() {
+                            checkBox(key).bindSelected(
+                                { serviceModel.domainStructure[key] as Boolean },
+                                { serviceModel.domainStructure[key] = it }
+                            )
+                        }
+
+                        is MutableMap<*, *> -> row(key) {
+                            @Suppress("UNCHECKED_CAST")
+                            val child = value as MutableMap<String, Any>
+                            // 하위 Map 순회
+                            child.forEach { (subKey, subValue) ->
+                                if (subValue is Boolean) {
+                                    checkBox(subKey).bindSelected(
+                                        { child[subKey] as Boolean },
+                                        { child[subKey] = it }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }.also {
             initValidation()                     // validationOnInput/Apply 활성화
             setOKButtonText("확인")
@@ -79,6 +109,8 @@ class TemplateDialog(project: Project) : DialogWrapper(true) {
 
     override fun doOKAction() {
         super.doOKAction()
-        println(serviceModel.domainPrefix)
+
+        val serviceTemplateMaker = ServiceTemplateMaker()
+        serviceTemplateMaker.createTemplate(serviceModel, project)
     }
 }
