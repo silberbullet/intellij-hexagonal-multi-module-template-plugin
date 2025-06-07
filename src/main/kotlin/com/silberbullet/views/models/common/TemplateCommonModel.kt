@@ -3,6 +3,8 @@ package com.silberbullet.views.models.common
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.extensions.PluginId
 
+interface TemplateModel
+
 data class TemplateCommonModel(
     val title: String = PluginManagerCore
         .getPlugin(PluginId.getId("io.github.silberbullet.hexagonal-multi-module-template"))
@@ -12,4 +14,4 @@ data class TemplateCommonModel(
         .getPlugin(PluginId.getId("io.github.silberbullet.hexagonal-multi-module-template"))
         ?.version
         .orEmpty()
-)
+) : TemplateModel
