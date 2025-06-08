@@ -1,0 +1,5 @@
+{{properties}}
+
+dependencies {
+{{dependencies}}
+}

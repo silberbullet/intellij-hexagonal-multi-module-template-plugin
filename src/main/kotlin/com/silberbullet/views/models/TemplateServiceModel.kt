@@ -11,12 +11,19 @@ class TemplateServiceModel(
     var methodList: MutableSet<Int> = mutableSetOf(),
     var domainStructure: MutableMap<String, Any> = mutableMapOf(
         "api" to mutableMapOf(
-            "domain"    to false,
+            "domain" to false,
             "exception" to false,
             "readmodel" to false
         ),
         "application" to false,
-        "driving"     to false,
-        "driven"      to false
+        "driving" to mutableMapOf(
+            "web-mvc" to false,
+            "web-flux" to false,
+        ),
+        "driven" to mutableMapOf(
+            "rdb" to false,
+            "redis" to false,
+            "client" to false,
+        )
     )
 ) : TemplateModel

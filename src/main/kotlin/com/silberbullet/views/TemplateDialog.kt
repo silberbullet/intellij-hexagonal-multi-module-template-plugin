@@ -77,7 +77,7 @@ class TemplateDialog(private val project: Project) : DialogWrapper(true) {
                 // 최상위 Map 순회
                 serviceModel.domainStructure.forEach { (key, value) ->
                     when (value) {
-                        is Boolean -> row() {
+                        is Boolean -> row(key) {
                             checkBox(key).bindSelected(
                                 { serviceModel.domainStructure[key] as Boolean },
                                 { serviceModel.domainStructure[key] = it }
