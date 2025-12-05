@@ -7,14 +7,22 @@ import javax.swing.*;
 public class TemplateDialogForm {
     
     public  JPanel rootPanel;
-    
-    private Project project;
-    
+    private JPanel projectPanel;
+    private JTextField searchField;
     private JTree projectStructureTree;
-    private JList moduleList;
-    
+    private JLabel selectedPathLabel;
+    private JPanel modulesPanel;
+    private JList moduleTemplatesList;
+    private JButton addModule;
+
+    private Project project;
+
     public TemplateDialogForm(Project project) {
         this.project = project;
         
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
