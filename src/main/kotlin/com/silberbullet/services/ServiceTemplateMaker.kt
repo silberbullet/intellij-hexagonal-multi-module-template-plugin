@@ -46,27 +46,52 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
 
         // 2) domainStructure 순회
         model.domainStructure.forEach { (key, value) ->
-            when (value) {
-                // 최상위 Boolean 항목 (application, driving, driven 등)
-                is Boolean -> {
-                    if (value) {
+            when (key) {
+                "application" -> {
+                    if (value as Boolean) {
                         val sub = File(domainDir, key)
                         if (!sub.exists()) makeDir(sub)
+
+                        // 패키지 생성
+                        // port
+                        val port = File(sub, "/src/main/java/${model.firstPackageName}/${model.domainPrefix}/port")
+                        if (!port.exists()) makeDir(port)
+                        // service
+                        val service =
+                            File(sub, "/src/main/java/${model.firstPackageName}/${model.domainPrefix}/service")
+                        if (!service.exists()) makeDir(service)
+                        // usecase
+                        val usecase =
+                            File(sub, "/src/main/java/${model.firstPackageName}/${model.domainPrefix}/usecase")
+                        if (!usecase.exists()) makeDir(usecase)
                     }
                 }
 
-                // "api" 처럼 중첩 Map인 경우
-                is Map<*, *> -> {
-                    // 먼저 api 폴더 자체 생성
-                    val apiDir = File(domainDir, key)
-                    if (!apiDir.exists()) makeDir(apiDir)
+                else -> {
+                    // 상위 폴더 생성
+                    val topDir = File(domainDir, key)
+                    if (!topDir.exists()) makeDir(topDir)
 
                     // 내부 Map(Boolean) 순회
-                    @Suppress("UNCHECKED_CAST")
-                    (value as Map<String, Boolean>).forEach { (subKey, enabled) ->
+                    @Suppress("UNCHECKED_CAST") (value as Map<String, Boolean>).forEach { (subKey, enabled) ->
                         if (enabled) {
-                            val sub = File(apiDir, subKey)
+                            val sub = File(topDir, subKey)
                             if (!sub.exists()) makeDir(sub)
+
+                            // 하위 패키지 생성
+                            val subPackage = if (subKey.contains("web")) {
+                                File(
+                                    sub,
+                                    "/src/main/java/${model.firstPackageName}/${model.domainPrefix}/web"
+                                )
+                            } else {
+                                File(
+                                    sub,
+                                    "/src/main/java/${model.firstPackageName}/${model.domainPrefix}/$subKey"
+                                )
+                            }
+
+                            if (!subPackage.exists()) makeDir(subPackage)
                         }
                     }
                 }
@@ -108,16 +133,13 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
 
                 "driving", "driven" -> {
                     val subMap = value as Map<String, Boolean>
-                    subMap.filterValues { it }
-                        .keys
-                        .forEach { subKey ->
-                            // "web-mvc" → "WebMvc", "rdb" → "Rdb" 등으로 변환
-                            val adapterSuffix = subKey
-                                .split('-', '_')
-                                .joinToString("") { it.replaceFirstChar(Char::uppercase) }
-                            pros += "val ${model.domainPrefix}${adapterSuffix}Adapter: String by project"
-                            deps += "    api(project(${model.domainPrefix}${adapterSuffix}Adapter))"
-                        }
+                    subMap.filterValues { it }.keys.forEach { subKey ->
+                        // "web-mvc" → "WebMvc", "rdb" → "Rdb" 등으로 변환
+                        val adapterSuffix =
+                            subKey.split('-', '_').joinToString("") { it.replaceFirstChar(Char::uppercase) }
+                        pros += "val ${model.domainPrefix}${adapterSuffix}Adapter: String by project"
+                        deps += "    api(project(${model.domainPrefix}${adapterSuffix}Adapter))"
+                    }
                 }
             }
         }
@@ -126,9 +148,7 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
         val depsBlock = deps.joinToString("\n")
 
         // 최종 스크립트
-        val script = tpl
-            .replace("{{properties}}", prosBlock)
-            .replace("{{dependencies}}", depsBlock)
+        val script = tpl.replace("{{properties}}", prosBlock).replace("{{dependencies}}", depsBlock)
 
         // 파일 쓰기
         File(domainDir, "build.gradle.kts").writeText(script)
@@ -159,15 +179,13 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
                             .replace("{{key}}", key)
                     }
 
-                    apiMap.entries
-                        .filter { it.value }
-                        .forEach { (key) ->
-                            val upperKey = key.replaceFirstChar { it.uppercase() }
-                            include += "    ${model.domainPrefix}${upperKey},"
-                            pros += propertiesTplState.replace("{{prefix}}", "${model.domainPrefix}${upperKey}")
-                            projectDir += projectDirTplState.replace("{{prefix}}", "${model.domainPrefix}${upperKey}")
-                                .replace("{{key}}", key)
-                        }
+                    apiMap.entries.filter { it.value }.forEach { (key) ->
+                        val upperKey = key.replaceFirstChar { it.uppercase() }
+                        include += "    ${model.domainPrefix}${upperKey},"
+                        pros += propertiesTplState.replace("{{prefix}}", "${model.domainPrefix}${upperKey}")
+                        projectDir += projectDirTplState.replace("{{prefix}}", "${model.domainPrefix}${upperKey}")
+                            .replace("{{key}}", key)
+                    }
                 }
 
                 "application" -> {
@@ -181,22 +199,19 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
 
                 "driving", "driven" -> {
                     val subMap = value as Map<String, Boolean>
-                    subMap.filterValues { it }
-                        .keys
-                        .forEach { subKey ->
-                            // "web-mvc" → "WebMvc", "rdb" → "Rdb" 등으로 변환
-                            val adapterSuffix = subKey
-                                .split('-', '_')
-                                .joinToString("") { it.replaceFirstChar(Char::uppercase) }
+                    subMap.filterValues { it }.keys.forEach { subKey ->
+                        // "web-mvc" → "WebMvc", "rdb" → "Rdb" 등으로 변환
+                        val adapterSuffix =
+                            subKey.split('-', '_').joinToString("") { it.replaceFirstChar(Char::uppercase) }
 
-                            include += "    ${model.domainPrefix}${adapterSuffix}Adapter,"
-                            pros += propertiesTplState.replace(
-                                "{{prefix}}",
-                                "${model.domainPrefix}${adapterSuffix}Adapter"
-                            )
-                            projectDir += projectDirTplState.replace("{{prefix}}", "${model.domainPrefix}${adapterSuffix}Adapter")
-                                .replace("{{key}}", subKey)
-                        }
+                        include += "    ${model.domainPrefix}${adapterSuffix}Adapter,"
+                        pros += propertiesTplState.replace(
+                            "{{prefix}}", "${model.domainPrefix}${adapterSuffix}Adapter"
+                        )
+                        projectDir += projectDirTplState.replace(
+                            "{{prefix}}", "${model.domainPrefix}${adapterSuffix}Adapter"
+                        ).replace("{{key}}", subKey)
+                    }
                 }
             }
         }
@@ -206,11 +221,8 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
         val projectDirBlock = projectDir.joinToString("\n")
 
         // 최종 스크립트
-        val script = tpl
-            .replace("{{prefix}}", model.domainPrefix)
-            .replace("{{properties}}", prosBlock)
-            .replace("{{include}}", includeBlock)
-            .replace("{{projectDir}}", projectDirBlock)
+        val script = tpl.replace("{{prefix}}", model.domainPrefix).replace("{{properties}}", prosBlock)
+            .replace("{{include}}", includeBlock).replace("{{projectDir}}", projectDirBlock)
 
         // 파일 쓰기
         File(domainDir, "${model.domainPrefix}.settings.gradle.kts").writeText(script)
@@ -218,9 +230,8 @@ class ServiceTemplateMaker : TemplateCreator<TemplateServiceModel> {
 
     private fun readTplFile(source: String): String {
         // 리소스에서 템플릿 읽어오기
-        val tplStream = javaClass.classLoader
-            .getResourceAsStream(source)
-            ?: throw IllegalStateException("템플릿을 찾을 수 없습니다.")
+        val tplStream =
+            javaClass.classLoader.getResourceAsStream(source) ?: throw IllegalStateException("템플릿을 찾을 수 없습니다.")
 
         return tplStream.bufferedReader().use { it.readText() }
     }

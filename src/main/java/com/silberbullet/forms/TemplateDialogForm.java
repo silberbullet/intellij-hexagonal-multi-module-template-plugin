@@ -7,14 +7,23 @@ import javax.swing.*;
 public class TemplateDialogForm {
     
     public  JPanel rootPanel;
-    private JPanel projectPanel;
-    private JTextField searchField;
+    private JPanel projectStructurePanel;
     private JTree projectStructureTree;
-    private JLabel selectedPathLabel;
-    private JPanel modulesPanel;
-    private JList moduleTemplatesList;
-    private JButton addModule;
-
+    private JPanel dependencyPanel;
+    private JPanel moduleBuilderPanel;
+    private JPanel moduleHeaderPanel;
+    private JTextField locationField;
+    private JTextField folderNameField;
+    private JTextField packageNameField;
+    private JTextField moduleNameField;
+    private JCheckBox domainModuleCheckBox;
+    private JPanel previewPanel;
+    private JTree previewTree;
+    private JButton cancelButton;
+    private JButton generateButton;
+    private JLabel selectedModuleLabel;
+    private JList availableModulesList;
+    
     private Project project;
 
     public TemplateDialogForm(Project project) {
