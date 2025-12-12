@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.silberbullet.forms.TemplateDialogForm">
   <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="718" height="560"/>
+      <xy x="20" y="20" width="927" height="672"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -119,7 +119,9 @@
               </component>
               <component id="716ba" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="84" height="36"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <text value="Module Name"/>
@@ -128,27 +130,176 @@
               <component id="50770" class="javax.swing.JTextField" binding="moduleNameField">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
+                    <preferred-size width="150" height="36"/>
                   </grid>
                 </constraints>
                 <properties/>
               </component>
               <component id="4ecf7" class="javax.swing.JCheckBox" binding="domainModuleCheckBox" default-binding="true">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Domain Module"/>
                 </properties>
               </component>
-              <grid id="2c5f6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="abd84" binding="domainOptionsPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none" title="Select Refrence Modules"/>
+                <children>
+                  <component id="98040" class="javax.swing.JCheckBox" binding="apiCheckBox" default-binding="true">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="100" height="24"/>
+                        <maximum-size width="100" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value="api"/>
+                    </properties>
+                  </component>
+                  <grid id="1fbd7" binding="apiOptionsPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="8eb23" class="javax.swing.JCheckBox" binding="domainCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="domain"/>
+                        </properties>
+                      </component>
+                      <component id="7b8e3" class="javax.swing.JCheckBox" binding="exceptionCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="exception"/>
+                        </properties>
+                      </component>
+                      <component id="93af1" class="javax.swing.JCheckBox" binding="readmodelCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="readmodel"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <component id="86b4" class="javax.swing.JCheckBox" binding="applicationCheckBox" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="application"/>
+                    </properties>
+                  </component>
+                  <component id="1c212" class="javax.swing.JCheckBox" binding="drivenCheckBox" default-binding="true">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="driven"/>
+                    </properties>
+                  </component>
+                  <component id="8642e" class="javax.swing.JCheckBox" binding="drivingCheckBox" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="driving"/>
+                    </properties>
+                  </component>
+                  <grid id="564ae" binding="drvingOptionsPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="35d93" class="javax.swing.JCheckBox" binding="webMvcCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="web-mvc"/>
+                        </properties>
+                      </component>
+                      <component id="7bccd" class="javax.swing.JCheckBox" binding="webFluxCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="web-flux"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="a9c1c" binding="drivenOptionsPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="c22e1" class="javax.swing.JCheckBox" binding="rdbCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="rdb"/>
+                        </properties>
+                      </component>
+                      <component id="96a3c" class="javax.swing.JCheckBox" binding="redisCheckBox" default-binding="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="redis"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="d21f" binding="manualToolsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
                 <constraints>
                   <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="4e3ea" class="javax.swing.JButton" binding="addFolderButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Add Folder"/>
+                    </properties>
+                  </component>
+                  <component id="e8267" class="javax.swing.JButton" binding="addModuleButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Add Module"/>
+                    </properties>
+                  </component>
+                  <component id="54836" class="javax.swing.JButton" binding="initButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Init"/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
             </children>
           </grid>
@@ -174,6 +325,19 @@
                   </component>
                 </children>
               </scrollpane>
+              <grid id="37528" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+                <constraints border-constraint="South"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d2521" class="javax.swing.JButton" binding="removeButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Remove"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>

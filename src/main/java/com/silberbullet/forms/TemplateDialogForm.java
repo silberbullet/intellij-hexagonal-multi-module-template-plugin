@@ -23,7 +23,27 @@ public class TemplateDialogForm {
     private JButton generateButton;
     private JLabel selectedModuleLabel;
     private JList availableModulesList;
-    
+    private JPanel domainOptionsPanel;
+    private JCheckBox apiCheckBox;
+    private JPanel apiOptionsPanel;
+    private JCheckBox domainCheckBox;
+    private JCheckBox exceptionCheckBox;
+    private JCheckBox readmodelCheckBox;
+    private JCheckBox applicationCheckBox;
+    private JCheckBox drivenCheckBox;
+    private JCheckBox drivingCheckBox;
+    private JPanel drvingOptionsPanel;
+    private JCheckBox webMvcCheckBox;
+    private JCheckBox webFluxCheckBox;
+    private JPanel drivenOptionsPanel;
+    private JCheckBox rdbCheckBox;
+    private JCheckBox redisCheckBox;
+    private JPanel manualToolsPanel;
+    private JButton initButton;
+    private JButton addModuleButton;
+    private JButton addFolderButton;
+    private JButton removeButton;
+
     private Project project;
 
     public TemplateDialogForm(Project project) {
