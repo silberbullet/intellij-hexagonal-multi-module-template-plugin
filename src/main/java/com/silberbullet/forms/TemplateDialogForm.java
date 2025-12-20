@@ -20,9 +20,9 @@ import javax.swing.*;
  * - 기존 모듈 Dependency 주입 관리
  * <p>
  * Layout 개념
- * ┌──────────────────────────────────────────┐
+ * ┌───────────────────────────────────────────────┐
  * │ ProjectStructure │ ModuleBuilder │ Dependency │
- * └──────────────────────────────────────────┘
+ * └───────────────────────────────────────────────┘
  * =========================
  */
 public class TemplateDialogForm {
@@ -64,5 +64,9 @@ public class TemplateDialogForm {
     
     public TemplateDialogForm(Project project) {
         this.project = project;
+        
+        projectStructurePanel.init(project, (path -> {
+            moduleBuilderPanel.getModuleInfoPanel().setLocationField(path);
+        }));
     }
 }

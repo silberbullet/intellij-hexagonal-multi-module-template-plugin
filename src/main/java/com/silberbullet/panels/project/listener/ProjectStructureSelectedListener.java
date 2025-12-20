@@ -1,6 +1,7 @@
 package com.silberbullet.panels.project.listener;
 
-public interface ProjectStructureListener {
+@FunctionalInterface
+public interface ProjectStructureSelectedListener {
 
     void onPathSelected(String path);
 }

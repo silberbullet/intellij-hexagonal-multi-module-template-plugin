@@ -3,7 +3,7 @@ package com.silberbullet.panels.project;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.silberbullet.panels.project.listener.ProjectStructureListener;
+import com.silberbullet.panels.project.listener.ProjectStructureSelectedListener;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -43,7 +43,7 @@ public class ProjectStructurePanel {
     /* =========================
      * Listener
      * ========================= */
-    private ProjectStructureListener listener;
+    private ProjectStructureSelectedListener listener;
     
     /* =========================
      * Context
@@ -53,7 +53,7 @@ public class ProjectStructurePanel {
     /* =========================
      * ProjectStructurePanel Init
      * ========================= */
-    public void init(Project project, ProjectStructureListener listener) {
+    public void init(Project project, ProjectStructureSelectedListener listener) {
         Objects.requireNonNull(project, "project is null");
         Objects.requireNonNull(listener, "listener is null");
         
@@ -70,7 +70,7 @@ public class ProjectStructurePanel {
             if (!(node.getUserObject() instanceof VirtualFile vf)) return;
             
             String basePath = project.getBasePath();
-            if(basePath == null) return;
+            if (basePath == null) return;
             
             String relativePath = vf.getPath().replace(basePath, "");
             

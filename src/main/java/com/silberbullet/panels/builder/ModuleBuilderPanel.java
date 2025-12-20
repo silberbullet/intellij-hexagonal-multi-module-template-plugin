@@ -39,4 +39,12 @@ public class ModuleBuilderPanel {
      * - 모듈 생성 결과 미리보기
      * ========================= */
     private PreviewPanel previewPanel;
+    
+    public ModuleInfoPanel getModuleInfoPanel() {
+        return moduleInfoPanel;
+    }
+    
+    public PreviewPanel getPreviewPanel() {
+        return previewPanel;
+    }
 }
