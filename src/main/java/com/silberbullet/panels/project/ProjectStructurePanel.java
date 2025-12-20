@@ -3,10 +3,12 @@ package com.silberbullet.panels.project;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.silberbullet.panels.project.listener.ProjectStructureListener;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 import java.util.Objects;
 
 /**
@@ -39,14 +41,41 @@ public class ProjectStructurePanel {
     private JTree projectStructureTree;
     
     /* =========================
+     * Listener
+     * ========================= */
+    private ProjectStructureListener listener;
+    
+    /* =========================
      * Context
      * ========================= */
-    private final Project project;
+    private Project project;
     
-    public ProjectStructurePanel(Project project) {
+    /* =========================
+     * ProjectStructurePanel Init
+     * ========================= */
+    public void init(Project project, ProjectStructureListener listener) {
         Objects.requireNonNull(project, "project is null");
+        Objects.requireNonNull(listener, "listener is null");
+        
         this.project = project;
+        this.listener = listener;
+        
         initProjectStructureTree();
+        initMouseListener();
+    }
+    
+    private void initMouseListener() {
+        projectStructureTree.addTreeSelectionListener(e -> {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
+            if (!(node.getUserObject() instanceof VirtualFile vf)) return;
+            
+            String basePath = project.getBasePath();
+            if(basePath == null) return;
+            
+            String relativePath = vf.getPath().replace(basePath, "");
+            
+            listener.onPathSelected(relativePath);
+        });
     }
     
     /* =========================
@@ -56,14 +85,13 @@ public class ProjectStructurePanel {
         String basePath = project.getBasePath();
         if (basePath == null) return;
         
-        VirtualFile rootDir =
-                LocalFileSystem.getInstance().findFileByPath(basePath);
+        VirtualFile rootDir = LocalFileSystem.getInstance().findFileByPath(basePath);
         if (rootDir == null) return;
         
-        DefaultTreeModel treeModel =
-                new DefaultTreeModel(buildTreeNode(rootDir));
+        DefaultTreeModel treeModel = new DefaultTreeModel(buildTreeNode(rootDir));
         
         projectStructureTree.setModel(treeModel);
+        projectStructureTree.setCellRenderer(createTreeCellRenderer());
         projectStructureTree.setRootVisible(true);
         projectStructureTree.setShowsRootHandles(true);
     }
@@ -72,16 +100,41 @@ public class ProjectStructurePanel {
      * Tree Node Builder
      * ========================= */
     private DefaultMutableTreeNode buildTreeNode(VirtualFile rootDir) {
-        DefaultMutableTreeNode treeNode =
-                new DefaultMutableTreeNode(rootDir.getName());
+        DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode(rootDir);
         
         if (rootDir.isDirectory()) {
             for (VirtualFile child : rootDir.getChildren()) {
+                // .git .idea 제외
+                if (child.getName().startsWith(".")
+                        || child.getName().endsWith("build")) continue;
+                
                 if (child.isDirectory()) {
                     treeNode.add(buildTreeNode(child));
                 }
             }
         }
         return treeNode;
+    }
+    
+    /* =========================
+     * Tree Renderer
+     * ========================= */
+    private TreeCellRenderer createTreeCellRenderer() {
+        return (tree, value, selected, expanded, leaf, row, hasFocus) -> {
+            JLabel label = new JLabel();
+            
+            Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
+            if (userObject instanceof VirtualFile vf) {
+                label.setText(vf.getName());
+            }
+            
+            if (selected) {
+                label.setOpaque(true);
+                label.setBackground(UIManager.getColor("Tree.selectionBackground"));
+                label.setForeground(UIManager.getColor("Tree.selectionForeground"));
+            }
+            
+            return label;
+        };
     }
 }
