@@ -4,12 +4,13 @@ public record ModuleInfo(
         String locationPath,
         String folderName,
         String packageName,
-        String moduleName
+        String moduleName,
+        DomainOptions domainOptions
 ) {
-    public ModuleInfo(String locationPath, String folderName, String packageName, String moduleName) {
-        this.locationPath = locationPath.strip();
-        this.folderName = folderName.strip();
-        this.packageName = packageName.strip();
-        this.moduleName = moduleName.strip();
+    public ModuleInfo {
+        locationPath = locationPath.strip();
+        folderName = folderName.strip();
+        packageName = packageName.strip();
+        moduleName = moduleName.strip();
     }
 }
