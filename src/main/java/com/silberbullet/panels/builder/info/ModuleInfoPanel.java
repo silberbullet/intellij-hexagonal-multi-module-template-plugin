@@ -2,6 +2,8 @@ package com.silberbullet.panels.builder.info;
 
 import com.silberbullet.panels.builder.info.listener.ModuleInfoAddFolderListener;
 import com.silberbullet.panels.builder.info.listener.ModuleInfoAddModuleListener;
+import com.silberbullet.panels.builder.info.type.DomainOptions;
+import com.silberbullet.panels.builder.info.type.ModuleInfo;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -55,11 +57,22 @@ public class ModuleInfoPanel {
     private ModuleInfoAddModuleListener moduleInfoAddModuleListener;
     private ModuleInfoAddFolderListener moduleInfoAddFolderListener;
     
-    public void init() {
+    public void init(ModuleInfoAddModuleListener moduleInfoAddModuleListener, ModuleInfoAddFolderListener moduleInfoAddFolderListener) {
+        this.moduleInfoAddModuleListener = moduleInfoAddModuleListener;
+        this.moduleInfoAddFolderListener = moduleInfoAddFolderListener;
+        
         domainOptionsPanel.init();
         
+        initListener();
+    }
+    
+    public void setLocationField(String path) {
+        locationField.setText(path);
+    }
+    
+    private void initListener() {
         // 도메인 체크 박스 클릭 이벤트
-        domainModuleCheckBox.addChangeListener(e ->{
+        domainModuleCheckBox.addChangeListener(e -> {
             initDomainOption(domainModuleCheckBox.isSelected());
         });
         
@@ -68,6 +81,14 @@ public class ModuleInfoPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                
+                if (folderNameField.getText().isEmpty() || locationField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid location and folder name");
+                } else {
+                    moduleInfoAddFolderListener.onAddFolderRequested(locationField.getText(), folderNameField.getText());
+                }
+                
+                initButton.doClick();
             }
         });
         
@@ -76,8 +97,17 @@ public class ModuleInfoPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                
+                if (!validateModuleInput()) {
+                    return;
+                }
+                
+                moduleInfoAddModuleListener.onModuleRequested(collectModuleInfo());
+                
+                initButton.doClick();
             }
         });
+        
         
         // 초기화 버튼 클릭 이벤트 정의
         initButton.addMouseListener(new MouseAdapter() {
@@ -90,16 +120,45 @@ public class ModuleInfoPanel {
                 packageNameField.setText("");
                 moduleNameField.setText("");
                 
+                domainModuleCheckBox.setSelected(false);
+                
                 folderNameField.requestFocus();
             }
         });
     }
     
-    public void setLocationField(String path) {
-        locationField.setText(path);
-    }
-    
     private void initDomainOption(boolean isDomainModule) {
         domainOptionsPanel.setVisible(isDomainModule);
     }
+    
+    /* =========================
+     * Snapshot
+     * ========================= */
+    public ModuleInfo collectModuleInfo() {
+        return new ModuleInfo(
+                locationField.getText(),
+                folderNameField.getText(),
+                packageNameField.getText(),
+                moduleNameField.getText(),
+                domainOptionsPanel.collectDomainOptions()
+        );
+    }
+    
+    private boolean validateModuleInput() {
+        if (locationField.getText().isBlank()
+                || folderNameField.getText().isBlank()
+                || packageNameField.getText().isBlank()
+                || moduleNameField.getText().isBlank()) {
+            
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Please fill in all required fields except Domain option.",
+                    "Invalid Input",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return false;
+        }
+        return true;
+    }
 }
+

@@ -70,6 +70,7 @@ public class DomainOptionsPanel {
      * ========================= */
     private void initDefaultSelections() {
         apiCheckBox.setSelected(true);
+        applicationCheckBox.setSelected(true);
         drivingCheckBox.setSelected(true);
         drivenCheckBox.setSelected(true);
         

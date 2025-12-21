@@ -41,7 +41,7 @@ public class ModuleBuilderPanel {
     private PreviewPanel previewPanel;
     
     public ModuleBuilderPanel() {
-        moduleInfoPanel.init();
+        moduleInfoPanel.init(null, null);
     }
     
     public ModuleInfoPanel getModuleInfoPanel() {
