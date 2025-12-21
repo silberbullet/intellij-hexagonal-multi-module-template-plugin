@@ -43,19 +43,7 @@ public class TemplateDialogForm {
      * - 모듈 생성 설정
      * ========================= */
     private ModuleBuilderPanel moduleBuilderPanel;
-    
-    /* =========================
-     * Right Area
-     * - 의존성 설정
-     * ========================= */
     private DependencyPanel dependencyPanel;
-    
-    /* =========================
-     * Dialog Actions
-     * - 생성 / 취소
-     * ========================= */
-    private JButton generateButton;
-    private JButton cancelButton;
     
     /* =========================
      * Context

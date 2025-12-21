@@ -1,63 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.silberbullet.forms.TemplateDialogForm">
-  <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="1154" height="786"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="d59e5" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="East"/>
-        <properties/>
-        <border type="none" title="Dependency"/>
-        <children>
-          <nested-form id="c4883" form-file="com/silberbullet/panels/dependency/DependencyPanel.form" binding="dependencyPanel">
-            <constraints border-constraint="Center"/>
-          </nested-form>
-        </children>
-      </grid>
-      <grid id="4d0da" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="Center"/>
-        <properties/>
-        <border type="none" title="Module Builder"/>
-        <children>
-          <nested-form id="73691" form-file="com/silberbullet/panels/builder/ModuleBuilderPanel.form" binding="moduleBuilderPanel">
-            <constraints border-constraint="Center"/>
-          </nested-form>
-        </children>
-      </grid>
-      <grid id="76336" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
-        <constraints border-constraint="South"/>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="13717" class="javax.swing.JButton" binding="generateButton">
-            <constraints/>
-            <properties>
-              <text value="Generate"/>
-            </properties>
-          </component>
-          <component id="4451f" class="javax.swing.JButton" binding="cancelButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <text value="Cancel"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="f4ad2" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="c6fb1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints border-constraint="West"/>
+        <constraints>
+          <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
         <properties>
           <name value=""/>
         </properties>
         <border type="none" title="Project Structure"/>
         <children>
-          <nested-form id="e2358" form-file="com/silberbullet/panels/project/ProjectStructurePanel.form" binding="projectStructurePanel">
+          <nested-form id="f5f4b" form-file="com/silberbullet/panels/project/ProjectStructurePanel.form" binding="projectStructurePanel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
+          </nested-form>
+        </children>
+      </grid>
+      <grid id="9d98b" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none" title="Module Builder"/>
+        <children>
+          <nested-form id="7ca8d" form-file="com/silberbullet/panels/builder/ModuleBuilderPanel.form" binding="moduleBuilderPanel">
+            <constraints border-constraint="Center"/>
+          </nested-form>
+        </children>
+      </grid>
+      <grid id="e6ed9" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none" title="Dependency"/>
+        <children>
+          <nested-form id="faec1" form-file="com/silberbullet/panels/dependency/DependencyPanel.form" binding="dependencyPanel">
+            <constraints border-constraint="Center"/>
           </nested-form>
         </children>
       </grid>
