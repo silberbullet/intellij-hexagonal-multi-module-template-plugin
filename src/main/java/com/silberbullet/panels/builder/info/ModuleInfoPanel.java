@@ -25,7 +25,7 @@ public class ModuleInfoPanel {
     /* =========================
      * Root (Form Binding)
      * ========================= */
-    private JPanel moduleInfoPanel;
+    public JPanel moduleInfoPanel;
     
     /* =========================
      * Module Base Info
@@ -36,38 +36,10 @@ public class ModuleInfoPanel {
     private JTextField moduleNameField;
     
     /* =========================
-     * Domain / API Options
+     * Domain Options
      * ========================= */
     private JCheckBox domainModuleCheckBox;
-    private JPanel domainOptionsPanel;
-    
-    private JCheckBox apiCheckBox;
-    private JPanel apiOptionsPanel;
-    
-    private JCheckBox domainCheckBox;
-    private JCheckBox exceptionCheckBox;
-    private JCheckBox readmodelCheckBox;
-    private JCheckBox applicationCheckBox;
-    
-    /* =========================
-     * Adapter Selection
-     * ========================= */
-    private JCheckBox drivingCheckBox;
-    private JCheckBox drivenCheckBox;
-    
-    /* =========================
-     * Driving Adapter Options
-     * ========================= */
-    private JPanel drvingOptionsPanel;
-    private JCheckBox webMvcCheckBox;
-    private JCheckBox webFluxCheckBox;
-    
-    /* =========================
-     * Driven Adapter Options
-     * ========================= */
-    private JPanel drivenOptionsPanel;
-    private JCheckBox rdbCheckBox;
-    private JCheckBox redisCheckBox;
+    private DomainOptionsPanel domainOptionsPanel;
     
     /* =========================
      * Manual Tools
@@ -84,8 +56,29 @@ public class ModuleInfoPanel {
     private ModuleInfoAddFolderListener moduleInfoAddFolderListener;
     
     public void init() {
+        domainOptionsPanel.init();
+        
+        // 도메인 체크 박스 클릭 이벤트
+        domainModuleCheckBox.addChangeListener(e ->{
+            initDomainOption(domainModuleCheckBox.isSelected());
+        });
+        
         // 폴터 추가 버튼 이벤트 정의
+        addFolderButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+        
         // 모듈 추가 버튼 이벤트 정의
+        addModuleButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+        
         // 초기화 버튼 클릭 이벤트 정의
         initButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -104,5 +97,9 @@ public class ModuleInfoPanel {
     
     public void setLocationField(String path) {
         locationField.setText(path);
+    }
+    
+    private void initDomainOption(boolean isDomainModule) {
+        domainOptionsPanel.setVisible(isDomainModule);
     }
 }

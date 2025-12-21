@@ -40,6 +40,10 @@ public class ModuleBuilderPanel {
      * ========================= */
     private PreviewPanel previewPanel;
     
+    public ModuleBuilderPanel() {
+        moduleInfoPanel.init();
+    }
+    
     public ModuleInfoPanel getModuleInfoPanel() {
         return moduleInfoPanel;
     }
