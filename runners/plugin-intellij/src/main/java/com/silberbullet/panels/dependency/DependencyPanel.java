@@ -13,6 +13,11 @@ import javax.swing.*;
 public class DependencyPanel {
     
     /* =========================
+     * Root Panel (Form Binding)
+     * ========================= */
+    private JPanel dependencyPanel;
+    
+    /* =========================
      * Selected Module
      * - 현재 의존성을 설정 중인 대상 모듈
      * ========================= */
@@ -23,16 +28,12 @@ public class DependencyPanel {
      * - 이미 적용된 의존성 목록
      * ========================= */
     private JPanel appliedDependenciesPanel;
-    
-    /**
-     * 현재 모듈에 적용된 모듈 / 라이브러리 목록
-     */
     private JList appliedDependenciesList;
     
     /**
      * 선택된 의존성 제거
      */
-    private JButton removeButton1;
+    private JButton removeButton;
     
     /* =========================
      * Available Modules
@@ -50,8 +51,4 @@ public class DependencyPanel {
      */
     private JButton addLibraryButton;
     
-    /* =========================
-     * Root Panel (Form Binding)
-     * ========================= */
-    private JPanel dependencyPanel;
 }

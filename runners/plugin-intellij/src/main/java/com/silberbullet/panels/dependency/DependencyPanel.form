@@ -36,7 +36,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="92c74" class="javax.swing.JButton" binding="removeButton1" default-binding="true">
+              <component id="92c74" class="javax.swing.JButton" binding="removeButton">
                 <constraints/>
                 <properties>
                   <text value="Remove"/>

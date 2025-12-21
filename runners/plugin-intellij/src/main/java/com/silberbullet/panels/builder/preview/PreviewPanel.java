@@ -1,6 +1,10 @@
 package com.silberbullet.panels.builder.preview;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.silberbullet.panels.builder.preview.PreviewModule;
 
 /**
  * =========================
@@ -17,6 +21,11 @@ import javax.swing.*;
 public class PreviewPanel {
     
     /* =========================
+     * Root Panel (Form Binding)
+     * ========================= */
+    private JPanel previewPanel;
+    
+    /* =========================
      * Preview Tree
      * - 생성될 구조 시각화
      * ========================= */
@@ -25,13 +34,7 @@ public class PreviewPanel {
     /* =========================
      * Preview Actions
      * ========================= */
-    /**
-     * 선택된 노드 제거
-     */
     private JButton removeButton;
     
-    /* =========================
-     * Root Panel (Form Binding)
-     * ========================= */
-    private JPanel previewPanel;
+    private List<PreviewModule> previewModuleList = new ArrayList<>();
 }
