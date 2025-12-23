@@ -1,19 +1,20 @@
 package com.silberbullet.generate.meta.module.service;
 
 import com.silberbullet.generate.meta.module.domain.Module;
-import com.silberbullet.generate.meta.module.domain.type.ModuleDomain;
+import com.silberbullet.generate.meta.module.domain.type.ModuleGeneratedFile;
 import com.silberbullet.generate.meta.module.usecase.ModuleCreateUseCase;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ModuleCommandService implements ModuleCreateUseCase {
+public class ModuleGeneratedService implements ModuleCreateUseCase {
 
     @Override
-    public ModuleDomain createModule(Module module) {
+    public ModuleGeneratedFile createModule(Module module) {
         assert module.getFolderName() != null;
         assert module.getLocationPath() != null;
         assert module.getModuleName() != null;
 
-        return new ModuleDomain(module);
+        //
+
+
+        return null;
     }
 }
